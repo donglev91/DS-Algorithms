@@ -1,0 +1,8 @@
+*.classpath
+*.project
+*.iml
+*.gitignore
+*.name
+*.xml
+*.prefs
+*.class
