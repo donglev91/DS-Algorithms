@@ -1,13 +1,22 @@
 package problem;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 public class Solution {
     public static void main(String[] args) {
-        int[] a = new int[] {1, 2, 4, 5, 7, 8, 10};
+        int[] a = new int[]{1, 2, 4, 5, 7, 8, 10};
+        System.out.println("\\");
         //System.out.println(Arrays.asList(a).contains(new Integer(1)));
         /*Stack<Integer> stack = new Stack<>();
         stack.pop();
@@ -37,7 +46,73 @@ public class Solution {
         //17 100 88 19 41 10 16 92
         //NO YES NO NO NO NO YES NO
         //YES YES YES YES YES YES YES NO
-        System.out.println(isSmartNumber(19));
+        //System.out.println(isSmartNumber(19));
+
+    }
+
+    static String gridChallenge(String[] grid) {
+        for (String s : grid) {
+            char[] ss = s.toCharArray();
+            Arrays.sort(ss);
+        }
+
+
+    }
+
+    static String[] bigSorting(String[] arr) {
+        Arrays.sort(arr, (o1, o2) -> {
+            if (o1.length() > o2.length())
+                return 1;
+            if (o1.length() < o2.length())
+                return -1;
+            return o1.compareTo(o2);
+        });
+
+        return arr;
+    }
+
+    //1.23 s
+    static class FastReader {
+        BufferedReader br;
+        StringTokenizer st;
+
+        public FastReader() {
+            br = new BufferedReader(new
+                    InputStreamReader(System.in));
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreElements()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+
+        double nextDouble() {
+            return Double.parseDouble(next());
+        }
+
+        String nextLine() {
+            String str = "";
+            try {
+                str = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return str;
+        }
     }
 
     private static boolean areBitSet(int n) {
@@ -248,11 +323,11 @@ public class Solution {
             if (x <= 3)
                 continue;
             int lengthX = String.valueOf(x).length();
-            long temp = (long)x*x;
+            long temp = (long) x * x;
             int lengthT = String.valueOf(temp).length();
             int l = Integer.parseInt(String.valueOf(temp).substring(0, lengthT - lengthX));
             int r = Integer.parseInt(String.valueOf(temp).substring(lengthT - lengthX));
-            if (x == l+r) {
+            if (x == l + r) {
                 System.out.print(x + " ");
                 count++;
             }
@@ -267,15 +342,15 @@ public class Solution {
     private static boolean isSmartNumber(int num) {
         int val = (int) Math.sqrt(num);
         System.out.println(val);
-        if((double)num / val == val)
+        if ((double) num / val == val)
             return true;
         return false;
     }
 
     public static String stringsXOR(String s, String t) {
         String res = new String("");
-        for(int i = 0; i < s.length(); i++) {
-            if(s.charAt(i) == t.charAt(i))
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == t.charAt(i))
                 res = "0";
             else
                 res = "1";
