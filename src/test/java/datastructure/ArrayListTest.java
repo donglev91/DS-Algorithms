@@ -1,6 +1,5 @@
 package datastructure;
 
-import datastruture.ArrayList;
 import org.junit.Test;
 
 import java.util.Arrays;
