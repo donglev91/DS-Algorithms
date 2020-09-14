@@ -3,7 +3,6 @@ package datastruture;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 public class ArrayList {
     private int size = 1;
@@ -11,7 +10,7 @@ public class ArrayList {
     private int actualSize = 0;
     private String[] dataArr = new String[size];
 
-    void add(String data) {
+    public void add(String data) {
         doubleSizeIfNeed();
         dataArr[actualSize] = data;
         actualSize++;
@@ -31,7 +30,7 @@ public class ArrayList {
             System.arraycopy(bufferArr, 0, dataArr, 0, bufferArr.length);
     }
 
-    void add(int index, String data) {
+    public void add(int index, String data) {
         if (index > actualSize) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
@@ -50,52 +49,68 @@ public class ArrayList {
         System.arraycopy(bufferArr, index, dataArr, index+1, actualSize - index - 1);
     }
 
-    String get(int index) {
+    public String get(int index) {
         validateIfOutOfBound(index);
         return dataArr[index];
     }
 
-    void addAll(Collection<String> collection) {
+    public void addAll(Collection<String> collection) {
         if (collection == null)
             throw new NullPointerException("input collection should not be null!");
-        int time = calculateTimeToIncrease(collection.size());
-        if (collection.size() + actualSize > size) {
-            size *= Math.pow(2, time);
-            copyData();
-        }
+        extendSizeIfNeed(collection);
 
         for (String col : collection) {
             dataArr[actualSize++] = col;
         }
     }
 
-    void addAll(int index, Collection<String> collection) {
+    public void addAll(int index, Collection<String> collection) {
         if (collection == null)
             throw new NullPointerException("input collection should not be null!");
         if (index > actualSize) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
 
-        int time = calculateTimeToIncrease(collection.size());
-        if (collection.size() + actualSize > size) {
-            size *= Math.pow(2, time);
-            copyData();
+        String[] bufferArr = new String[actualSize];
+        System.arraycopy(dataArr, 0, bufferArr, 0, actualSize);
+
+        extendSizeIfNeed(collection);
+
+        int count = index;
+        for (String col : collection) {
+            dataArr[count++] = col;
+            actualSize++;
         }
+
+        if (count == actualSize) {
+            return;
+        }
+
+        System.arraycopy(bufferArr, index, dataArr, index + collection.size(), actualSize - index - collection.size());
 
     }
 
-    void sort(Comparator<String> c) {
+    private void extendSizeIfNeed(Collection<String> collection) {
+        final int collectionSize = collection.size();
+        int time = calculateTimeToIncrease(collectionSize);
+        if (collectionSize + actualSize > this.size) {
+            this.size *= Math.pow(2, time);
+            copyData();
+        }
+    }
+
+    public void sort(Comparator<String> c) {
         Arrays.sort(dataArr, 0, actualSize, c);
     }
 
-    int firstIndexOf(String data) {
+    public int firstIndexOf(String data) {
         for (int i = 0; i < actualSize; i++)
             if (dataArr[i].equals(data))
                 return i;
         return -1;
     }
 
-    int lastIndexOf(String data) {
+    public int lastIndexOf(String data) {
         for (int i = actualSize-1; i > 0; i--)
             if (dataArr[i].equals(data))
                 return i;
@@ -103,7 +118,7 @@ public class ArrayList {
     }
 
     private int calculateTimeToIncrease(int collectionSize) {
-        return (int)Math.ceil(Math.log((collectionSize+actualSize)/actualSize)/Math.log(2));
+        return (int)Math.ceil(Math.log((collectionSize+actualSize)/size)/Math.log(2)) + 1;
     }
 
     private void validateIfOutOfBound(int index) {
@@ -112,28 +127,31 @@ public class ArrayList {
         }
     }
 
-    void remove(int index) {
+    public void remove(int index) {
         validateIfOutOfBound(index);
-        dataArr[index] = null;
         actualSize--;
+        String[] bufferArr = new String[actualSize];
+        System.arraycopy(dataArr, 0, bufferArr, 0, index);
+        System.arraycopy(dataArr, index+1, bufferArr, index, actualSize - index);
+        dataArr = bufferArr;
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return actualSize == 0;
     }
 
-    boolean contains(String data) {
+    public boolean contains(String data) {
         if (firstIndexOf(data) == -1)
             return false;
         return true;
     }
 
-    void clear() {
+    public void clear() {
         dataArr = EMPTY_LIST;
         actualSize = 0;
     }
 
-    int size() {
+    public int size() {
         return actualSize;
     }
 

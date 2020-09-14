@@ -3,7 +3,7 @@
 *.iml
 *.gitignore
 *.name
-*.xml
 *.prefs
 *.class
 target/*
+.idea/*
