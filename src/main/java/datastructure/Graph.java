@@ -2,6 +2,7 @@ package datastructure;
 
 import java.util.*;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class Graph {
     private final Map<Vertex, List<Vertex>> adjVertices = new HashMap<>();
@@ -51,9 +52,12 @@ public class Graph {
             String vertex = vertexStack.pop();
             if (!visited.contains(vertex)) {
                 visited.add(vertex);
+                /*vertexStack.addAll(this.getAdjVertices(new Vertex(vertex))
+                                .stream()
+                                .map(Vertex::getLabel)
+                                .collect(Collectors.toList()));*/
                 for (Vertex v : this.getAdjVertices(new Vertex(vertex))) {
-                    if (!visited.contains(v.getLabel()))
-                        vertexStack.push(v.getLabel());
+                    vertexStack.push(v.getLabel());
                 }
             }
         }
