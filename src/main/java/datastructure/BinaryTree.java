@@ -234,6 +234,16 @@ public class BinaryTree {
             }
         }
     }
+
+    int getHeight() {
+        return getHeight(root);
+    }
+
+    int getHeight(BTNode root) {
+        if (root == null)
+            return -1;
+        return 1 + Math.max(getHeight(root.left), getHeight(root.right));
+    }
 }
 
 class BTNode {

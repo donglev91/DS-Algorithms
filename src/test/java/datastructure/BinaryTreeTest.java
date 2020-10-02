@@ -73,6 +73,14 @@ public class BinaryTreeTest {
         Assert.assertEquals("[6, 4, 8, 3, 5, 7, 9]", sortedElements.toString());
     }
 
+    @Test
+    public void getBinaryTreeHeight_ShouldReturnNumberOfEdgesOfLongestPath() {
+        BinaryTree binaryTree = getSampleOrderedBinaryTree();
+        binaryTree.add(SAMPLE_ELEMENT+4);
+        int height = binaryTree.getHeight();
+        Assert.assertEquals(3, height);
+    }
+
     /**
      *          6
      *       4      8
