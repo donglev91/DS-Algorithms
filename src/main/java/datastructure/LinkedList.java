@@ -1,12 +1,17 @@
 package datastructure;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class LinkedList<E extends Comparable<E>> {
     Node<E> head;
 
     void append(E data) {
+        Map<Long, Long> map = new HashMap<>();
+        map.put(1L, map.getOrDefault(1, 0L));
+
         Node<E> tail = getTail();
         tail.next = new Node<>(data);
     }
